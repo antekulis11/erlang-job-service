@@ -9,9 +9,9 @@ init(Req, State) ->
     {Status, ResponseJson} =
         case job_sort:sort_tasks(Tasks) of
             {ok, SortedTasks} ->
-                {200, jiffy:encode(#{<<"tasks">> => SortedTasks})};
+                {200, jiffy:encode(#{<<"tasks">> => SortedTasks}, [pretty])};
             {error, Reason} ->
-                {400, jiffy:encode(#{<<"error">> => Reason})}
+                {400, jiffy:encode(#{<<"error">> => Reason}, [pretty])}
         end,
     Reply = cowboy_req:reply(Status,
         #{"content-type" => "application/json"},

@@ -10,9 +10,13 @@
 -export([start/2, stop/1]).
 
 start(_StartType, _StartArgs) ->
-    job_service_sup:start_link().
+    io:format("Starting job service...~n"),
+    _= application:ensure_all_started(cowboy),
+    start_server:start(),
+    {ok, self()}.
 
 stop(_State) ->
+    io:format("Stoping job service...~n"),
     ok.
 
 %% internal functions

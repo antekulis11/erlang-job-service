@@ -2,7 +2,6 @@
 -export([start/0]).
 
 start() ->
-    _ = application:ensure_all_started(cowboy),
     Dispatch = cowboy_router:compile([
         {'_', [
             {"/jobs", jobs_handler, []},
