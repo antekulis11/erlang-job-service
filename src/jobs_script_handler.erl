@@ -15,6 +15,10 @@ init(Req, State) ->
                 #{<<"content-type">> => <<"text/plain">>},
                 BashScript, Req1),
             {ok, Reply, State};
-        {_Error, _Reason} ->
-            {ok, _Error, State}
+        {error, Reason} ->
+            ErrorMsg = io_lib:format("# Error: ~p~n", [Reason]),
+            Reply = cowboy_req:reply(400,
+                #{<<"content-type">> => <<"text/plain">>},
+                lists:flatten(ErrorMsg), Req1),
+            {ok, Reply, State}
     end.
